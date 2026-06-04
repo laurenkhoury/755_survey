@@ -1,0 +1,408 @@
+---
+title: "Sentiments Towards Work-Life Balance and a Shorter Work Week"
+subtitle: "A Survey Study"
+author:
+    - name: "Lauren Khoury"
+      affiliation: Univserity of Wisconsin, Madison
+date: "`r lubridate::today()`"
+date-format: "MMMM DD, YYYY"
+execute:
+    echo: true
+format:
+  pdf:
+    toc: true
+    lof: true
+    lot: true
+    number-sections: true
+    fig-width: 6
+    fig-height: 4
+    fig-align: "center"
+    documentclass: "article"
+    margin-left: 1in
+    margin-right: 1in
+    margin-top: 1in
+    margin-bottom: 1in
+    latex-packages:
+      - amsmath
+      - amssymb
+fig-cap-location: top
+keywords: work-life balance, shorter work week
+abstract: |
+  This paper looks at survey responses about work-life balance satisfaction.
+bibliography: references.bib
+csl: apa.csl
+---
+
+```{r}
+#| label: set up
+
+library(tidyverse) |> suppressMessages()
+library(broom) |> suppressMessages()
+library(skimr) |> suppressMessages()
+library(kableExtra) |> suppressMessages()
+library(cowplot) |> suppressMessages()
+library(stringr) |> suppressMessages()
+library(sf) |> suppressMessages()
+library(rnaturalearth) |> suppressMessages()
+library(rnaturalearthdata) |> suppressMessages()
+library(countrycode) |> suppressMessages()
+
+options(digits = 4)
+
+```
+
+# Introduction
+
+  In the summer of 2021, I visited Iceland and quickly fell in love with their way of life. While I was there, Iceland was becoming a leader of something that I believe more countries should adopt -- a shorter work week. In 2014, the country began small trials of implementing a shorter work week with just around 60 people; this number grew over the course of 5 years to over 2,500 people (around 1% of the nation's population) [@auto21]. The workers participating saw their hours decrease from 40 hours per week to around 35/36 hours per week with no reduction in pay [@auto21]. The results were overwhelmingly positive: workers were more positive and happy at work, people felt they had more time to do errands and as a result could spend more time with family, and they felt they had more time for themselves [@auto21]. Opponents to shortening the work week state that they do not want work to pile up or for workers to lose productivity. The trials showed that "productivity either stayed within expected levels of variation, or rose" during the trial [@auto21]. Managers agreed that there was no increase in incomplete projects as workers were more effective with their shortened hours, and some managers even noted that participating in the shorter work week trials yielded a greater desire to work there as applications increased [@auto21]. A follow-up report was done a few years after trials concluded and found that the shorter work week became widespread with 59% of staff being offered reduced hours [@auto24]. A survey was conducted and 97% of responses thought their work-life balance had improved or remained the same, but the majority felt it improved [@auto24]. 
+  
+  What often gets ignored as we enter the workforce is us as humans. One author notes that this shorter work week shows that we are not just machines that work, then sleep, and get back to work, but that we are persons with desires and lives [@auto21]. I am a firm believer that life should be for living and that work should complement our lives, not consume it. All things considered, I was motivated to survey people about their sentiments towards their current work-life balance and a shorter work week.     
+
+# Design
+
+  I began by asking general questions about respondents' amount of work and also the format of their work. I asked how many days and hours are worked per week separately. I wanted both of this information because people may work a lot of hours spread out over the whole week versus a lot of hours compacted into a few days, and each of these may yield different feelings of burnout. I also wanted to know if their work format was fully in-person, fully remote, a hybrid setup (both in-person and remote), or some other option which they could input themselves.
+
+  For the heart of my survey, I provided eight statements for participant to rate on a 5-point Likert scale from "strongly disagree" to "strongly agree" about their relationship with work. See [@tbl-data-dict] for a full list of questions. Out of these statements, two of these are reverse-coded. A composite score will be calculated among seven out of eight of these statements to represent overall job satisfaction. The last statement asking if participants would benefit from a shorter work week may not necessarily relate to job satisfaction. This will be part of my analysis of my secondary dependent variable.
+  
+  For the final section of my survey, I asked participants to rate their satisfaction with their work-life balance on a scale of 0 to 100 where 0 is "extremely unsatisfied" and 100 is "extremely satisfied." This is my primary dependent variable. Then, I wanted more information on people's preferences for a shorter work week. I presented 4 options and asked particiapnts to rank these from most preferred to least preferred. The 4 options were: (1) their current work week, with no change in pay; (2) a shorter work week with more hours per day, with no change in pay; (3) a shorter work week with the same hours per day, with no change in pay; and (4) a shorter work week with the same hours per day, with a reduction in pay. While there were many options I could have included, I did not want respondents to be overwhelmed with many choices to rank with minute differences among each. I did not ask about more days per week because I am interested in preferences for a shorter work week. I did not ask about an increase in pay because there are other factors that may go into obtaining a pay raise. I included the choice for a reduction in pay because I was curious if people would prefer a short work week to their current set up, even if it meant receiving less pay. In the final question, I gave a free-response entry for participants to describe why they chose their most preferred and also to leave any other comments they'd like to share about their work-life balance. I understand that some people cannot accept less days or less pay due to obligations, so for this and other reasons I wanted to give participants a chance to explain and leave any remaining thoughts.
+
+# Methods
+
+  The survey was deployed via Qualtrics and Prolific. I collected a random sample of 100 participants and screened to only include survey-takers with an employment status of part-time or full-time as my survey questions require people to be actively working. I considered only including people who work full-time, but thought I would analyze any differences in work-life balance among these two groups. I had to reject one participant due to an incomplete completion code, leaving me with a final $n = 99$ participants. Participants received compensation from the University of Wisconsin - Madison for their time taken to complete the survey. 
+  
+  All cleaning and analysis of data was conducted in RStudio using R. There were two separate datasets collected -- one containing the survey responses from Qualtrics and one containing demographic data from Prolific. The data from Prolific was filtered to only include those whose responses were approved. Some respondents either returned or timed-out from the survey and will not be considered. The Qualtrics data was filtered to responses collected on the day the survey was deployed, excluding some test runs of the survey. These two datasets were merged by the recorded participant identification number. The merge originally yielded 55 variables from which 27 were retained for analysis. The columns dropped were not pertinent to analysis and include information about when the survey was started, completed, and reviewed, the amount of time taken to complete the survey, the latitude and longitude of the respondents, participants' first and last name and email (all missing values), and other information about completion status. An excerpt of the data can be found below in [@tbl-d-head] and a data dictionary of the 27 variables of focus can be seen below in [@tbl-data-dict].
+  
+  The summary statistics were calculated, and there were some missing values found. Missing values from the Likert scale questions were imputed with the mean of that question's column. For the ethnicity variable, any missing values were grouped into the "other" column. The other variables with missing values will not be used for analysis or model fitting, so those will be left as-is for now.
+  
+  Exploratory data analysis was conducted primarily on the categorical variables. There were multiple variables measuring similar constructs (e.g., country of birth/residence, nationality, language, and ethnicity). Since this survey is inquiring about people's jobs, it seems most logical to focus on participants' country of residence. This variable was converted to a factor with the reference level set to be the United States. Work format was also converted to a factor. Binary variables were dummy coded as 0/1.
+  
+  An ordinary least squares regression model was fit to explain overall work-life balance satisfaction by both survey questions and demographic variables. I included variables representing details about respondents' work (e.g., how many days/hours worked per week, their work format, and full- versus part-time status). Then, all 8 Likert questions were included. Finally, demographic variables that may affect work-life balance were included (e.g., country of residence, sex, and age). The linear equation tested is as follows:
+  
+$$ \mathrm{satisfaction} = \beta_0 + \beta_1\mathrm{days\_per\_week} + \beta_2\mathrm{hours\_per\_week} + \beta_3\mathrm{work\_format} + \beta_4\mathrm{employment\_status} + \\ 
+\beta_5\mathrm{likert\_1} + \beta_6\mathrm{likert\_2} + \beta_7\mathrm{likert\_3} + \beta_8\mathrm{likert\_4} + \beta_9\mathrm{likert\_5} + \beta_{10}\mathrm{likert\_6} + \beta_{11}\mathrm{likert\_7} + \beta_{12}\mathrm{likert\_8} + \\
+\beta_{13}\mathrm{country\_of\_residence} + \beta_{14}\mathrm{age} + \beta_{15}\mathrm{sex} $$ {#eq-model}
+
+# Results
+
+  I begin by reading in the survey data from Qualtrics ("wlb") and the demographic data from Prolific. I filter the survey responses to exclude the test runs, and only include responses from the date the survey was ran. The Prolific data is filtered to only include participants who were approved. I perform some other data cleaning steps to make sure the participant identification numbers were the correct 24 alphanumeric character length. Both datasets were then joined by the participant ID number and were then saved into a new dataset containing the columns of value for this paper.
+
+```{r}
+#| label: read in data
+
+wlb <- read_csv(here::here("wlb.csv"), show_col_types = FALSE) |> 
+  janitor::clean_names()
+
+prolific <- read_csv(here::here("prolific.csv"), show_col_types = FALSE) |> 
+  janitor::clean_names()
+
+```
+
+```{r}
+#| label: clean original data
+
+prolific_clean <- prolific |> filter(status == "APPROVED")
+
+wlb_clean <- wlb |> 
+  filter(startsWith(start_date, "2025-06-29")) |> 
+  mutate(q1 = if_else(nchar(q1) > 24, str_sub(q1, 1, 24), q1))
+
+```
+
+```{r}
+#| label: combine data
+
+data <- right_join(wlb_clean, prolific_clean, by = c("q1" = "participant_id"))
+
+```
+
+```{r}
+#| label: filter data
+
+d <- data |> select(q1, q2_4, q3_4, q4, 
+                    q7_1, q7_2, q7_3, q7_4, q7_5, q7_6, q7_7, q7_8,
+                    q8_1, q9_1, q9_2, q9_3, q9_4, q10,
+                    age, sex, ethnicity_simplified, country_of_birth, country_of_residence,
+                    nationality, language, student_status, employment_status)
+
+```
+
+The final dataset was then cleaned: columns were renamed for clarity of question, numeric columns were converted from the original character data type to numeric, and any entries with "DATA_EXPIRED" were converted to NAs to be handled later.
+
+```{r}
+#| label: clean combined data
+
+d <- d |> 
+  rename(id = q1) |> 
+  rename(days_per_week = q2_4) |> 
+  rename(hours_per_week = q3_4) |> 
+  rename(work_format = q4) |> 
+  rename_with(~ str_replace(., "q7", "likert"), 
+              all_of(c("q7_1", "q7_2", "q7_3", "q7_4", "q7_5", "q7_6", "q7_7", "q7_8"))) |> 
+  rename(satisfaction = q8_1) |> 
+  rename_with(~ str_replace(., "q9", "rank"), 
+              all_of(c("q9_1", "q9_2", "q9_3", "q9_4"))) |> 
+  rename(free_response = q10)
+  
+num_cols <- c("days_per_week", "hours_per_week", "satisfaction", "age",
+              "work_format", "likert_1", "likert_2", "likert_3", "likert_4",
+              "likert_5", "likert_6", "likert_7", "likert_8",
+              "rank_1", "rank_2", "rank_3", "rank_4")
+d <- d |> mutate(across(all_of(num_cols), as.numeric))
+
+d <- d |> mutate(across(everything(), ~ ifelse(. == "DATA_EXPIRED", NA, .)))
+
+```
+
+Below, we see the first 5 rows of the dataframe, transposed such that each column is one participant and each row is a variable [@tbl-d-head].
+
+```{r}
+#| label: tbl-d-head
+
+d |> select(!id) |> head(5) |> t() |> as.data.frame() |>
+  kbl() |>
+  kable_styling(bootstrap_options = c("striped", "hover"), 
+                full_width = FALSE,
+                font_size = 12)
+
+```
+
+The data dictionary [@tbl-data-dict] explains each variable in greater detail.
+
+```{r}
+#| label: tbl-data-dict
+
+tbl_dict <- tibble(
+  variable = c("id", "days per week", "hours per week", "work format",
+  "likert 1", "likert 2", "likert 3", "likert 4", "likert 5", "likert 6", "likert 7", "likert 8",
+  "satisfaction", "rank 1-rank 4", "free response", "age", "sex", "ethnicity simplified", "country of birth",
+  "country of residence", "nationality", "language", "student status", "employment status"),
+  description = c(
+    "Participant ID number",
+    "On average, how many days do you work per week?",
+    "On average, how many hours do you work per week?",
+    "Which of the following best describes your work format?",
+    "I often look forward to starting my workday.",
+    "I am focused and productive during the workday.",
+    "When I am working, I daydream about being somewhere else.",
+    "I feel that I have enough time for my other responsibilities during the work week (e.g., exercise, cooking, appointments, etc.).",
+    "I have time for personal hobbies/passions outside of work.",
+    "By the end of the work week, I am exhausted.",
+    "I feel that the amount I am paid is a fair exchange for the time and effort I dedicate to my job.",
+    "A shorter work week would benefit me.",
+    "How satisfied are you with your current work-life balance?",
+    "Rank work week options in order of your most preferred (1) to least preferred (4).",
+    "Describe why you chose your 1st preferred option. Discuss any other comments/feelings you have about your work-life balance that you'd like to share.",
+    "Participant age", "Participant sex", "Participant ethnicity", "Participant's country of birth", "Participant's country of residence", "Participant's nationality", "Participant's language", "Participant student status", "Participant employment status"),
+  values = c("24 character alphanumeric code",
+             "1-7",
+             "0-100",
+             "Fully in-person=1, Fully remote=2, Hybrid=3",
+             "1,2,3,4,5",
+             "1,2,3,4,5", 
+             "1,2,3,4,5", 
+             "1,2,3,4,5", 
+             "1,2,3,4,5", 
+             "1,2,3,4,5",
+             "1,2,3,4,5",
+             "1,2,3,4,5",
+             "0-100",
+             "1-4",
+             "Open-ended",
+             "19-69", "Female, Male", 
+             "[see figure below]", "[see figure below]", 
+             "[see figure below]", "[see figure below]", "[see figure below]",
+             "Yes, No", "Full-time, Part-time"
+             ))
+
+tbl_dict |>
+  kbl(col.names = c("Variable", "Description", "Values"), 
+      escape = FALSE) |>
+  kable_styling(bootstrap_options = c("striped", "hover"), 
+                full_width = FALSE,
+                font_size = 12) |>
+  column_spec(1, width = "8em") |>
+  column_spec(2, width = "15em") |>
+  column_spec(3, width = "10em")
+
+```
+
+Here we view the statistics for the numeric variables [@tbl-stats-num].
+
+```{r}
+#| label: tbl-stats-num
+
+stats_num <- d |> select(where(is.numeric)) |> skim_without_charts()
+
+stats_num |> 
+  select(-c("numeric.p25", "numeric.p75")) |> 
+  kbl(col.names = c("type", "variable", "n_missing", "complete_rate",
+                    "mean", "sd", "p0", "p50", "p100")) |> 
+  kable_styling(bootstrap_options = c("striped"), font_size = 12)
+
+```
+
+Here we view the statistics for the categorical variables [@tbl-stats-cat].
+
+```{r}
+#| label: tbl-stats-cat
+
+stats_cat <- d |> select(where(is.character)) |> skim_without_charts()
+
+stats_cat |> 
+  select(-c("character.min", "character.max", "character.empty", "character.whitespace")) |> 
+  kbl(col.names = c("type", "variable", "n_missing", "complete_rate", "n_unique")) |> 
+  kable_styling(bootstrap_options = c("striped"), font_size = 12)
+
+```
+
+Any missing values for the likert scale questions are replaced with the mean of that question. Any missing values for ethnicity are grouped into the "other" category.
+
+```{r}
+#| label: missing data
+
+d <- d |> mutate(across(starts_with("likert_"), ~ {
+  col_mean <- round(mean(., na.rm = TRUE))
+  ifelse(is.na(.), col_mean, .)}))
+
+d <- d |> mutate(ethnicity_simplified = ifelse(is.na(ethnicity_simplified), "Other",
+                                               ethnicity_simplified))
+
+```
+
+The dummy coding is completed as detailed in the methods section.
+
+```{r}
+#| label: dummy code
+
+d <- d |> 
+  mutate(sex_01 = case_match(sex, "Female" ~ 1, "Male" ~ 0),
+         student_status_01 = case_match(student_status, "Yes" ~ 1, "No" ~ 0),
+         employment_status_01 = case_match(employment_status, "Full-Time" ~ 1, "Part-Time" ~ 0),
+         country_of_residence = factor(country_of_residence),
+         country_of_residence = relevel(country_of_residence, ref = "United States"),
+         work_format_lbl = case_match(work_format, 
+                                      1 ~ "Fully in-person", 2 ~ "Fully remote", 3 ~ "Hybrid"),
+         work_format_lbl = factor(work_format_lbl))
+
+```
+
+In these seven bar plots, we see distributions of demographic and work information [@fig-bar-plots].
+
+```{r}
+#| label: fig-bar-plots
+
+p0 <- ggplot(data = d, aes(x = age)) + geom_histogram(bins = 50)
+p1 <- ggplot(data = d, aes(x = sex)) + geom_bar()
+p2 <- ggplot(data = d, aes(x = student_status)) + geom_bar()
+p3 <- ggplot(data = d, aes(x = employment_status)) + geom_bar()
+p4 <- ggplot(data = d, aes(x = days_per_week)) + geom_histogram(bins = 50)
+p5 <- ggplot(data = d, aes(x = hours_per_week)) + geom_histogram(bins = 50)
+p6 <- ggplot(data = d, aes(x = work_format_lbl)) + geom_bar()
+
+plot_grid(p0, p1, p2, p3, p4, p5, p6, nrow = 4, ncol = 2)
+
+```
+
+In this figure [@fig-bar-plots-country], we see the distribution of participants' ethnicity, nationality, language, and country of birth. As discussed in the methods section, only country of residence is included in the linear model as this likely represents where participants are working.
+
+```{r}
+#| label: fig-bar-plots-country
+
+p1 <- ggplot(data = d, aes(x = ethnicity_simplified)) + geom_bar() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+p2 <- ggplot(data = d, aes(x = nationality)) + geom_bar() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+p3 <- ggplot(data = d, aes(x = language)) + geom_bar() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+p4 <- ggplot(data = d, aes(x = country_of_birth)) + geom_bar() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+p5 <- ggplot(data = d, aes(x = country_of_residence)) + geom_bar() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+plot_grid(p1, p2, p3, p4, p5, nrow = 3, ncol = 2)
+
+```
+
+Here, we can visualize the diversity in participant's countries of residence [@fig-map]. The red circles indicate if the country is represented in the collected data. 
+
+```{r}
+#| label: fig-map
+
+world <- ne_countries(scale = "small", returnclass = "sf") |> 
+  filter(name != "Antarctica")
+world <- st_make_valid(world)
+
+country_points <- st_point_on_surface(world) |> 
+  st_coordinates() |> 
+  as.data.frame() |> 
+  rename(longitude = X, latitude = Y) |> 
+  suppressWarnings()
+
+country_points$name <- world$name_long
+
+participant_country <- country_points |> filter(name %in% d$country_of_residence)
+
+participant_counts <- d |> 
+  group_by(country_of_residence) |> 
+  summarise(count = n())
+
+d_map <- left_join(participant_country, participant_counts, 
+                   by = c("name" = "country_of_residence"))
+
+ggplot(data = world) +
+  geom_sf(fill = "lightgray", color = "darkgray", size = 0.1) + 
+  geom_point(data = d_map,
+             aes(x = longitude, y = latitude),
+             color = "red", 
+             size = 2,      
+             shape = 16,    
+             alpha = 0.7) + 
+  labs(title = "Participant Country of Residence on World Map") +
+  theme_minimal() +      
+  theme(plot.title = element_text(hjust = 0.5),
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        axis.text = element_blank(),        
+        axis.title = element_blank())
+
+```
+
+In this table, we see the average satisfaction ratings of work-life balance by country, in descending order [@tbl-sat-by-country]. The table also includes the number of partcipiants in that country. 
+
+```{r}
+#| label: tbl-sat-by-country
+
+d |> 
+  group_by(country_of_residence) |> 
+  summarise(n = n(),
+            mean_satisfaction = mean(satisfaction)) |> 
+  arrange(desc(mean_satisfaction))
+
+```
+
+The linear model is fit according to the equation above [@eq-model]. The summary of results is shown.
+
+```{r}
+#| label: linear model
+
+lm1 <- lm(satisfaction ~ days_per_week*hours_per_week*work_format_lbl +
+            likert_1 + likert_2 + likert_3 + likert_4 + likert_5 + likert_6 + likert_7 + likert_8 +
+            country_of_residence + age + sex_01, data = d)
+
+lm1 |> summary()
+
+```
+
+In the results above, we see a few variables that have a significant effect on work-life balance satisfaction, considering $\alpha = 0.05$. There are also some variables that I expected to effect work-life balance but did not (i.e., the days and hours worked per week, the work format, and their interaction). Employment status was removed from the model due to causing singularities. Since the hours worked per week gives the same, if not better, information than employment status (full time versus part time), I decided to keep hours in the model. 
+
+  There were three Likert scale items that seemed to significantly relate to work-life balance: questions 1, 5, and 7 (see [@tbl-data-dict] for a review of these questions). The feelings towards looking forward to starting the workday ($b = 7.63, t(61)=4.17, p<0.001$), having enough time for personal hobbies/passions ($b = 8.14, t(61)=4.12, p<0.001$), and being compensated a fair amount ($b = 3.98, t(61)=2.46, p=0.017$), all significantly affect work-life balance satisfaction. Recall that the reference level for country of residence was set to be the United States. There were four countries that had significantly higher work-life balance satisfaction ratings than the United States: Czech Republic ($b = 28.14, t(61)=2.37, p=0.021$), Malaysia ($b = 34.15, t(61)=2.48, p=0.015$), South Africa ($b = 8.53, t(61)=2.04, p=0.045$), and the United Kingdom ($b = 14.42, t(61)=3.14, p=0.003$), when controlling for all other predictors in the model.
+
+# Discussion
+
+  To recap, I analyzed results from my Qualtrics survey inquiring about work-life balance. This was combined with participant's demographic data from Prolific to understand the full picture of the research question. The variables were explored and those predicted to have an effect on work-life balance satisfaction scores were included in a linear regression model. We saw that certain items in the Likert scale did significantly relate to work-life balance satisfaction. Also, we examined the differences in satisfaction ratings from different countries and found a few were significantly higher than the United States ratings. 
+  
+  For future steps, I would like to collect more responses and add more questions. Specifically, I would like a more even distribution of responses from different countries. Then, I would like to conduct an exploratory factor analysis on my current and additional Likert scale questions to see which items might factor together to represent a sub-construct of job satisfaction. I would also want to develop a new scale that measures work-life balance satisfaction to gauge if people would benefit from a reduced workload. I would also like to inspect some of the questions that did not make it into this analysis. This includes analyzing the ranking question about participants' preferences for a shorter work week as well conducting some text analysis on the free-response question.
+  
+  I hope that the work here inspires contiued discussion on improving work-life balance worldwide. After all, we are not simply cogs in a machine. We should all be able to focus more on the "life" part of the "work-life" model. 
+
+
+
