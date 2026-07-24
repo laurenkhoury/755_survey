@@ -1,0 +1,101 @@
+age,sex,country_of_residence,days_per_week,hours_per_week,work_format,likert_1,likert_5,likert_7,satisfaction
+33,Female,United States,5,40,in-office,3,3,2,40
+69,Male,United States,5,40,hybrid,2,2,3,20
+55,Female,United Kingdom,5,40,hybrid,4,4,4,78
+48,Male,United Kingdom,5,39,in-office,4,4,4,100
+39,Female,United States,5,40,in-office,4,5,4,60
+36,Male,Czech Republic,5,40,in-office,2,4,3,80
+37,Male,Spain,5,40,in-office,3,3,3,60
+42,Male,Germany,7,60,remote,4,2,4,50
+47,Female,Israel,5,45,hybrid,4,3,4,65
+42,Male,Canada,5,40,in-office,2,4,2,50
+48,Male,Greece,4,20,in-office,4,4,3,80
+42,Male,United Kingdom,5,40,in-office,4,5,4,85
+30,Female,United Kingdom,5,25,remote,4,NA,4,86
+41,Male,Portugal,5,55,in-office,1,4,1,65
+35,Male,Portugal,5,40,remote,3,4,2,66
+31,Female,Mexico,7,80,remote,1,4,1,40
+62,Male,Greece,5,40,hybrid,3,4,3,75
+42,Female,United Kingdom,5,45,hybrid,4,4,4,80
+25,Female,United Kingdom,5,40,hybrid,2,2,2,49
+35,Female,United Kingdom,3,24,hybrid,4,NA,3,100
+21,Male,Poland,5,57,hybrid,4,3,NA,40
+51,Female,Poland,6,64,in-office,3,1,1,20
+55,Female,United Kingdom,5,30,remote,4,5,4,96
+39,Male,United States,5,38,hybrid,4,5,4,91
+29,Female,South Africa,5,40,in-office,4,3,3,50
+30,Female,South Africa,5,50,remote,5,5,5,100
+58,Male,South Africa,5,66,hybrid,2,3,4,39
+37,Female,South Africa,5,41,hybrid,2,4,2,63
+22,Female,South Africa,5,49,in-office,1,1,1,0
+32,Female,South Africa,5,40,hybrid,1,5,1,66
+38,Male,United States,6,38,remote,2,4,1,41
+44,Male,United Kingdom,5,40,hybrid,3,3,3,65
+63,Male,United Kingdom,5,37,hybrid,4,3,4,80
+46,Female,United Kingdom,5,40,hybrid,3,4,3,50
+32,Male,United States,5,42,in-office,5,5,5,100
+53,Female,Canada,5,40,in-office,4,2,5,50
+48,Male,Germany,5,43,hybrid,4,3,2,41
+35,Male,Germany,6,35,in-office,4,3,4,62
+26,Male,Netherlands,5,40,hybrid,3,4,2,51
+46,Female,United Kingdom,2,20,in-office,1,4,4,80
+35,Male,Greece,7,50,remote,5,1,1,20
+30,Female,Kenya,6,46,in-office,3,2,1,27
+26,Male,Kenya,4,36,hybrid,5,4,5,80
+32,Female,Austria,5,40,hybrid,4,3,2,40
+49,Male,United Kingdom,5,40,in-office,3,NA,2,62
+28,Female,Portugal,5,20,in-office,1,4,3,50
+30,Male,Greece,5,40,hybrid,5,4,2,80
+35,Male,Germany,5,40,hybrid,4,4,5,70
+24,Female,Poland,5,40,in-office,2,3,5,70
+31,Male,Netherlands,5,40,hybrid,4,4,2,80
+46,Female,United States,5,40,in-office,2,2,2,35
+28,Female,South Africa,5,40,hybrid,5,3,5,80
+44,Female,Malaysia,7,35,hybrid,4,2,2,65
+30,Male,Kenya,5,50,in-office,4,4,4,60
+25,Male,United States,2,50,in-office,4,4,2,70
+23,Female,United Kingdom,5,40,in-office,2,4,4,70
+36,Female,South Africa,5,40,remote,5,3,4,90
+61,Male,Ireland,5,38,hybrid,2,2,4,25
+30,Female,South Africa,3,40,hybrid,4,4,4,70
+36,Male,United States,5,36,in-office,2,3,3,25
+55,Female,South Africa,5,42,hybrid,4,1,2,40
+64,Female,United Kingdom,5,38,in-office,4,4,2,75
+29,Female,United Kingdom,5,60,in-office,5,5,4,91
+21,Female,South Africa,6,70,in-office,5,5,5,99
+27,Female,United States,6,40,remote,4,3,3,45
+24,Female,South Africa,5,25,in-office,5,5,5,100
+28,Female,South Africa,5,38,in-office,4,4,4,80
+21,Female,South Africa,6,48,hybrid,5,5,5,92
+29,Male,South Africa,5,44,in-office,5,4,4,76
+30,Female,South Africa,5,46,in-office,5,5,4,100
+26,Female,United Kingdom,5,40,in-office,2,2,2,50
+19,Male,South Africa,5,40,hybrid,5,5,5,80
+24,Female,United States,5,40,hybrid,5,4,4,83
+22,Male,South Africa,5,58,hybrid,5,2,4,79
+48,Female,South Africa,5,50,hybrid,4,4,4,80
+54,Female,South Africa,6,42,in-office,4,4,4,65
+29,Female,South Africa,4,41,hybrid,2,3,5,47
+51,Male,South Africa,5,35,hybrid,4,4,5,80
+23,Female,South Africa,5,50,hybrid,4,4,4,70
+40,Male,South Africa,6,40,in-office,4,3,4,80
+29,Female,South Africa,5,42,in-office,5,5,4,100
+22,Female,South Africa,5,45,in-office,4,4,4,80
+47,Male,South Africa,5,60,hybrid,5,5,5,100
+31,Male,South Africa,6,40,in-office,4,3,4,80
+27,Female,South Africa,5,40,in-office,5,4,5,100
+23,Female,United States,6,20,hybrid,4,3,4,50
+30,Female,South Africa,4,40,hybrid,5,4,4,60
+23,Female,South Africa,7,40,in-office,5,5,5,100
+24,Male,United States,5,30,hybrid,4,4,3,70
+25,Female,South Africa,6,46,in-office,4,4,4,69
+46,Female,South Africa,5,40,in-office,5,4,4,80
+29,Female,South Africa,5,53,in-office,5,5,5,100
+22,Male,South Africa,5,35,hybrid,4,5,4,66
+24,Female,South Africa,2,40,hybrid,5,4,4,79
+22,Female,South Africa,5,29,hybrid,4,4,4,78
+24,Male,South Africa,5,38,in-office,4,5,5,76
+51,Female,South Africa,5,40,hybrid,5,2,5,70
+32,Female,South Africa,1,43,hybrid,5,4,5,78
+59,Female,South Africa,5,8,hybrid,4,4,4,60
+35,Male,Canada,7,10,remote,3,4,2,58
